@@ -14,6 +14,8 @@ type Vaga = {
   days_since_posted: number;
   faixa_tempo: string;
   slug: string;
+  created_at: string;
+  
 };
 
 export default function Home() {
@@ -48,7 +50,15 @@ export default function Home() {
       ) : (
         <div className="space-y-4">
           {vagas.map(vaga => (
-            <VagaCard key={vaga.id} {...vaga} />
+            <VagaCard
+              key={vaga.id}
+              title={vaga.title}
+              city={vaga.city}
+              uf={vaga.uf}
+              area_slug={vaga.area_slug}
+              slug={vaga.slug}
+              created_at={vaga.created_at}
+            />
           ))}
         </div>
       )}

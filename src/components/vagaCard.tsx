@@ -1,32 +1,28 @@
 import React from "react";
 import { timeAgo } from "@/utils/timeAgo";
 
-type VagaProps = {
-  title: string;
-  city: string;
-  uf: string;
-  area_slug: string;
-  days_since_posted: number;
-  slug: string;
-  created_at?: string; 
-};
-
 export function VagaCard({
   title,
   city,
   uf,
   area_slug,
-  days_since_posted,
   slug,
   created_at
-}: VagaProps) {
+}: {
+  title: string;
+  city: string;
+  uf: string;
+  area_slug: string;
+  slug: string;
+  created_at: string;
+}) {
   return (
     <div className="rounded-lg border border-gray-200 bg-white shadow-sm p-6 flex flex-col gap-2 hover:shadow-md transition">
       <div className="flex items-center justify-between">
         <span className="text-xs px-2 py-1 rounded bg-blue-100 text-blue-700 font-semibold uppercase">
           {area_slug}
         </span>
-        <span className="text-xs text-gray-400">{timeAgo(created_at ?? "")}</span>
+        <span className="text-xs text-gray-400">{timeAgo(created_at)}</span>
       </div>
       <h2 className="text-lg font-bold text-gray-800">{title}</h2>
       <div className="flex items-center gap-2 text-sm text-gray-600">
