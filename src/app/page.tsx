@@ -29,12 +29,30 @@ export default function Home() {
     const loadVagas = async () => {
       setLoading(true);
       let query = supabase.from('vagas').select('*').order('created_at', { ascending: false });
-      if (filter) query = query.eq('faixa_tempo', filter);
       if (area) query = query.eq('area_slug', area);
       if (city) query = query.ilike('city', `%${city}%`);
       const { data, error } = await query;
+
+      let vagasFiltradas = data || [];
+      if (filter === "1d") {
+        vagasFiltradas = vagasFiltradas.filter(vaga => {
+          const diff = (new Date().getTime() - new Date(vaga.created_at).getTime()) / (1000 * 60 * 60);
+          return diff < 24;
+        });
+      } else if (filter === "7d") {
+        vagasFiltradas = vagasFiltradas.filter(vaga => {
+          const diff = (new Date().getTime() - new Date(vaga.created_at).getTime()) / (1000 * 60 * 60 * 24);
+          return diff < 7;
+        });
+      } else if (filter === "14d") {
+        vagasFiltradas = vagasFiltradas.filter(vaga => {
+          const diff = (new Date().getTime() - new Date(vaga.created_at).getTime()) / (1000 * 60 * 60 * 24);
+          return diff < 14;
+        });
+      }
+
       if (error) console.error(error);
-      else setVagas(data || []);
+      else setVagas(vagasFiltradas);
       setLoading(false);
     };
 
