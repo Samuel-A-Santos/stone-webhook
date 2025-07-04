@@ -1,4 +1,5 @@
 import React from "react";
+import { timeAgo } from "@/utils/timeAgo";
 
 type VagaProps = {
   title: string;
@@ -6,8 +7,8 @@ type VagaProps = {
   uf: string;
   area_slug: string;
   days_since_posted: number;
-  faixa_tempo: string;
   slug: string;
+  created_at?: string; 
 };
 
 export function VagaCard({
@@ -16,8 +17,8 @@ export function VagaCard({
   uf,
   area_slug,
   days_since_posted,
-  faixa_tempo,
   slug,
+  created_at
 }: VagaProps) {
   return (
     <div className="rounded-lg border border-gray-200 bg-white shadow-sm p-6 flex flex-col gap-2 hover:shadow-md transition">
@@ -25,7 +26,7 @@ export function VagaCard({
         <span className="text-xs px-2 py-1 rounded bg-blue-100 text-blue-700 font-semibold uppercase">
           {area_slug}
         </span>
-        <span className="text-xs text-gray-400">{faixa_tempo} atrás</span>
+        <span className="text-xs text-gray-400">{timeAgo(created_at ?? "")}</span>
       </div>
       <h2 className="text-lg font-bold text-gray-800">{title}</h2>
       <div className="flex items-center gap-2 text-sm text-gray-600">
@@ -33,8 +34,6 @@ export function VagaCard({
           📍 {city}
           {uf ? `, ${uf}` : ""}
         </span>
-        <span>•</span>
-        <span>{days_since_posted} dias atrás</span>
       </div>
       <a
         href={`https://jornada.stone.com.br/times/${area_slug}/oportunidades/${slug}`}
