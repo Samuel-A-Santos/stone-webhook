@@ -1,5 +1,22 @@
 import React from "react";
 
+const TIME_FILTERS = [
+  { value: "", label: "Todas as faixas de tempo" },
+  { value: "1d", label: "Hoje" },
+  { value: "7d", label: "Última semana" },
+  { value: "14d", label: "Últimos 14 dias" },
+];
+
+const AREA_FILTERS = [
+  { value: "", label: "Todos departamentos" },
+  { value: "comercial", label: "Comercial" },
+  { value: "logistica", label: "Logística" },
+  { value: "tecnologia", label: "Tecnologia" },
+  { value: "relacionamento-com-o-cliente", label: "Relacionamento com o Cliente" },
+  { value: "outras-vagas", label: "Outras Vagas" },
+  { value: "null", label: "Sem departamento" },
+];
+
 type Props = {
   selected: string | null;
   onChange: (value: string | null) => void;
@@ -10,7 +27,6 @@ type Props = {
 };
 
 export function FilterMenu({ selected, onChange, area, setArea, city, setCity }: Props) {
-
   return (
     <div className="flex flex-wrap gap-4 mb-6">
       <select
@@ -18,23 +34,18 @@ export function FilterMenu({ selected, onChange, area, setArea, city, setCity }:
         onChange={e => onChange(e.target.value || null)}
         className="border rounded px-3 py-2"
       >
-        <option value="">Todas as faixas de tempo</option>
-        <option value="1d">Hoje</option>
-        <option value="7d">Última semana</option>
-        <option value="14d">Últimos 14 dias</option>
+        {TIME_FILTERS.map(opt => (
+          <option key={opt.value} value={opt.value}>{opt.label}</option>
+        ))}
       </select>
       <select
         value={area || ""}
         onChange={e => setArea(e.target.value)}
         className="border rounded px-3 py-2"
       >
-        <option value="">Todos departamentos</option>
-        <option value="comercial">Comercial</option>
-        <option value="logistica">Logística</option>
-        <option value="tecnologia">Tecnologia</option>
-        <option value="relacionamento-com-o-cliente">Relacionamento com o Cliente</option>
-        <option value="outras-vagas">Outras Vagas</option>
-        <option value="null">Sem departamento</option>
+        {AREA_FILTERS.map(opt => (
+          <option key={opt.value} value={opt.value}>{opt.label}</option>
+        ))}
       </select>
       <input
         type="text"
